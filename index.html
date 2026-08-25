@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://storymaps.arcgis.com; style-src 'self' https://use.typekit.net 'unsafe-inline'; font-src https://use.typekit.net; img-src 'self' https://storymaps.arcgis.com https://*.arcgis.com data:; connect-src 'self' https://storymaps.arcgis.com https://*.arcgis.com wss://*.arcgis.com;">
+    <title>Messengers of Peace — Kiosk</title>
+    <link rel="stylesheet" href="https://use.typekit.net/oib6sky.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <!-- Idle overlay (hidden by default via CSS, shown by kiosk.js when idle) -->
+    <div class="idle-overlay" id="idleOverlay">
+      <div class="idle-overlay__card">
+        <h1>Messengers of Peace</h1>
+        <p>Explore the story of peacemakers around the world.</p>
+        <p class="idle-overlay__hint">Touch to begin</p>
+      </div>
+    </div>
+
+    <!-- StoryMap embed container -->
+    <div class="storymaps-root"></div>
+
+    <!-- Scripts: config MUST load first, then kiosk, then embed engine -->
+    <script src="config.js"></script>
+    <script src="kiosk.js"></script>
+    <script id="embed-script" src="https://storymaps.arcgis.com/embed/view"></script>
+  </body>
+</html>
