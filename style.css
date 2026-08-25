@@ -1,0 +1,73 @@
+/*
+ * Host page styles for the Messengers of Peace museum kiosk.
+ * The overlay is hidden by default (display: none) and shown by kiosk.js
+ * when the kiosk goes idle. If JavaScript fails to load, the story
+ * remains visible (progressive enhancement).
+ */
+
+body {
+  margin: 0;
+}
+
+/* Idle overlay — covers the full viewport, dims the story underneath */
+.idle-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+/* Shown by kiosk.js when the kiosk goes idle */
+.idle-overlay.is-visible {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Welcome card — centered white card with generous padding for museum display */
+.idle-overlay__card {
+  text-align: center;
+  background-color: #ffffff;
+  max-width: 600px;
+  padding: 60px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.idle-overlay__card h1 {
+  font-family: "alwyn-new-rounded-web", sans-serif;
+  font-size: 3.5em;
+  margin: 0 0 20px 0;
+  color: #1a1a1a;
+}
+
+.idle-overlay__card p {
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 1.75em;
+  margin: 0 0 30px 0;
+  color: #333333;
+  line-height: 1.4;
+}
+
+.idle-overlay__hint {
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 1.5em;
+  color: #666666;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Gentle pulsing animation to attract attention */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Prevent story scrolling while overlay is active */
+body.no-scroll {
+  overflow: hidden;
+}
