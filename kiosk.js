@@ -56,7 +56,6 @@ function onIdle() {
 function onActivity() {
 }
 
-// Throttled activity handler for pointermove/mousemove
 function handleMove() {
   if (Date.now() - lastMoveResetTime >= MOVE_THROTTLE_MS) {
     lastMoveResetTime = Date.now();
@@ -64,7 +63,6 @@ function handleMove() {
   }
 }
 
-// Activity event listeners on document
 document.addEventListener('pointerdown', handleActivity);
 document.addEventListener('pointermove', handleMove, { passive: true });
 document.addEventListener('keydown', handleActivity);
@@ -74,10 +72,8 @@ document.addEventListener('touchstart', handleActivity, { passive: true });
 document.addEventListener('mousedown', handleActivity);
 document.addEventListener('mousemove', handleMove, { passive: true });
 
-// Overlay click handler — clicking the overlay dismisses it
 document.getElementById('idleOverlay').addEventListener('click', hideOverlay);
 
-// Initialization
 function init() {
   lastActivityTime = Date.now();
   idleCheckInterval = setInterval(checkIdle, IDLE_CHECK_INTERVAL_MS);
@@ -90,7 +86,6 @@ if (document.readyState === 'loading') {
   init();
 }
 
-// Cleanup
 window.addEventListener('beforeunload', function () {
   if (idleCheckInterval) {
     clearInterval(idleCheckInterval);
