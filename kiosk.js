@@ -23,6 +23,7 @@ var lastMoveResetTime = 0;
 function handleActivity() {
   lastActivityTime = Date.now();
   if (isIdle) {
+    isIdle = false;
     onActivity();
     hideOverlay();
   }
