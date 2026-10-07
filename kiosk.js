@@ -71,6 +71,18 @@ document.addEventListener('scroll', handleActivity, { passive: true });
 document.addEventListener('touchstart', handleActivity, { passive: true });
 document.addEventListener('mousedown', handleActivity);
 document.addEventListener('mousemove', handleMove, { passive: true });
+document.addEventListener(
+  "touchmove",
+  function (e) {
+    const mapArea = e.target.closest(".map-section");
+
+    // ignore pinch events everywhere except the map to prevent the user from zooming the UI
+    if (e.touches.length > 1 && !mapArea) {
+      e.preventDefault();
+    }
+  },
+  { passive: false }
+);
 
 document.getElementById('idleOverlay').addEventListener('click', hideOverlay);
 
