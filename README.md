@@ -5,7 +5,7 @@ A museum kiosk web page that embeds an [ArcGIS StoryMap](https://storymaps.arcgi
 ## Features
 
 - **Custom font injection** — Alwyn New Rounded for headings, Museo Sans Rounded for body text, loaded via Adobe Fonts and applied through the StoryMap embed config
-- **Idle welcome overlay** — after 3 minutes of no interaction, a full-screen "Touch to begin" overlay appears with a pulsing animation to attract visitors
+- **Idle welcome overlay** — after 3 minutes of no interaction, a full-screen image overlay appears with a "Touch to begin" prompt to attract visitors
 - **Progressive enhancement** — the StoryMap is visible even if JavaScript fails; the overlay is hidden by CSS default and only shown by `kiosk.js`
 - **No build step** — plain HTML, CSS, and JS. No bundler, no npm dependencies, no framework
 - **Content Security Policy** — restricts all resource origins to trusted CDNs (Esri, Adobe Fonts, Google Fonts)
@@ -15,7 +15,7 @@ A museum kiosk web page that embeds an [ArcGIS StoryMap](https://storymaps.arcgi
 ```
 index.html       Host page: CSP, Adobe Fonts link, overlay markup, embed scripts
 config.js        StoryMap embed config: story ID, root selector, font families
-style.css        Overlay styling, welcome card, pulse animation
+style.css        Overlay styling, idle screen image scaling
 kiosk.js         Idle detection (3-min timer), overlay toggle, onIdle/onActivity hooks
 DEPLOYMENT.md    Full deployment guide: Adobe Fonts, Esri builder, web server, kiosk browser
 README.md        This file
@@ -57,7 +57,7 @@ Font-family names must match the `@font-face` declarations in the Adobe Fonts CS
 
 ### Idle Overlay
 
-`kiosk.js` monitors pointer, touch, keyboard, and scroll events on `document`. Every 1 second it checks whether 3 minutes (180,000 ms) have passed since the last activity. If so, it adds the `.is-visible` class to `#idleOverlay`, which switches it from `display: none` to `display: flex`. Any user interaction removes the class and resets the timer.
+`kiosk.js` monitors pointer, touch, keyboard, and scroll events on `document`. Every 1 second it checks whether 3 minutes (180,000 ms) have passed since the last activity. If so, it adds the `.is-visible` class to `#idleOverlay`, which switches it from `display: none` to `display: block`. The overlay displays a full-viewport image (`images/idle.webp`) scaled with `object-fit: contain` to fill the screen without stretching; the semi-transparent dark background fills any letterboxed space. Any user interaction removes the class and resets the timer.
 
 The `onIdle()` and `onActivity()` functions are empty stubs reserved for a future autoplay-iframe enhancement (not currently implemented).
 

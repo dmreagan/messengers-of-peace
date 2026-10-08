@@ -13,7 +13,7 @@ Museum kiosk web page embedding an ArcGIS StoryMap (advanced/script-tag embed) w
 ├── index.html       Host page: CSP, Adobe Fonts link, overlay markup, ordered <script> tags
 ├── config.js        window.storyMapsEmbedConfig — story ID, root selector, font family/weights
 ├── kiosk.js         Idle detection (3-min), overlay toggle, onIdle/onActivity reserved stubs
-├── style.css        Overlay/card styling, pulse animation, progressive-enhancement default
+├── style.css        Overlay styling, idle screen image scaling, progressive-enhancement default
 ├── DEPLOYMENT.md    Authoritative deploy guide (Adobe Fonts, Esri builder, kiosk browser, troubleshooting)
 ├── README.md        Feature spec + how-it-works
 └── LICENSE          BSD-3-Clause, copyright Indiana University
@@ -26,7 +26,7 @@ Museum kiosk web page embedding an ArcGIS StoryMap (advanced/script-tag embed) w
 | Swap StoryMap | `config.js:15` `storyId` | Also update allowed domains in Esri builder |
 | Change fonts | `config.js:21-41` + `index.html:8` Adobe Fonts link + `style.css` font-family | Names MUST match `@font-face` in Typekit CSS |
 | Edit CSP | `index.html:6` meta http-equiv | Add any new origin or it silently blocks |
-| Overlay styling | `style.css:13-62` | `.idle-overlay` + `.is-visible` + `.idle-overlay__card` |
+| Overlay styling | `style.css:12-35` | `.idle-overlay` + `.is-visible` + `.idle-overlay__image` |
 | Deploy/troubleshoot | `DEPLOYMENT.md` §4-7 | Web server, kiosk browser flags, silent-embed-fix |
 
 ## CODE MAP
@@ -42,13 +42,14 @@ Museum kiosk web page embedding an ArcGIS StoryMap (advanced/script-tag embed) w
 | `onIdle` / `onActivity` | fn | `kiosk.js:52` / `:56` | Intentionally empty — reserved for future autoplay-iframe (see DEPLOYMENT.md) |
 | `handleMove` | fn | `kiosk.js:59` | Throttled wrapper → `handleActivity` |
 | `init` | fn | `kiosk.js:77` | Starts interval, hides overlay (belt-and-suspenders) |
+| `idle-overlay__image` | CSS class | `style.css:30` | Full-viewport image element — object-fit: contain for no-stretch scaling |
 
 ## CONVENTIONS
 - **ES5 style**: `var` + `function` declarations. Match it — no `const`/`let`/arrows in `kiosk.js`/`config.js`.
 - **No build/deps**: do not introduce npm packages, imports, or a bundler.
-- **Script load order** (`index.html:24-27`): `config.js` → `kiosk.js` → Esri embed engine. MUST stay in this order.
+- **Script load order** (`index.html:21-23`): `config.js` → `kiosk.js` → Esri embed engine. MUST stay in this order.
 - **CSP is strict**: any new external origin must be added to the relevant directive in `index.html:6` or it silently fails.
-- **CSS**: BEM-ish (`.idle-overlay`, `.idle-overlay__card`, `.idle-overlay__hint`); state via `.is-visible`; `body.no-scroll` locks scroll.
+- **CSS**: BEM-ish (`.idle-overlay`, `.idle-overlay__image`); state via `.is-visible`; `body.no-scroll` locks scroll.
 - **Passive listeners**: `pointermove`/`wheel`/`scroll`/`touchstart`/`mousemove` use `{ passive: true }` — preserve.
 - **File headers**: C-style block comment with purpose summary; inline `//` for non-obvious decisions.
 
