@@ -9,9 +9,9 @@
  * future autoplay-iframe enhancement. See DEPLOYMENT.md for details.
  */
 
-// 3 minutes — adjust as needed for the museum.
+// 10 minutes — adjust as needed for the museum.
 // For testing, set window.KIOSK_IDLE_TIMEOUT_MS = 5000 before this script loads.
-var IDLE_TIMEOUT_MS = window.KIOSK_IDLE_TIMEOUT_MS || 180000;
+var IDLE_TIMEOUT_MS = window.KIOSK_IDLE_TIMEOUT_MS || 600000;
 var IDLE_CHECK_INTERVAL_MS = 1000;
 var MOVE_THROTTLE_MS = 1000;
 
